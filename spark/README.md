@@ -31,8 +31,10 @@ RUN pip install \
 
 ```
 $ docker run -p 8080:8080 -p 6000:8081 -P -it spark bash
-root@c42d33c3ee09:/# master
+
+root@c42d33c3ee09:/# runner master
 starting org.apache.spark.deploy.master.Master, logging to /opt/spark/logs/spark--org.apache.spark.deploy.master.Master-1-c42d33c3ee09.out
-root@c42d33c3ee09:/# slave $(hostname):$SPARK_MASTER_PORT
+
+root@c42d33c3ee09:/# runner slave $(hostname):$SPARK_MASTER_PORT
 starting org.apache.spark.deploy.worker.Worker, logging to /opt/spark/logs/spark--org.apache.spark.deploy.worker.Worker-1-c42d33c3ee09.out
 ```
