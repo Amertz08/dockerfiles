@@ -38,3 +38,7 @@ starting org.apache.spark.deploy.master.Master, logging to /opt/spark/logs/spark
 root@c42d33c3ee09:/# runner slave $(hostname):$SPARK_MASTER_PORT
 starting org.apache.spark.deploy.worker.Worker, logging to /opt/spark/logs/spark--org.apache.spark.deploy.worker.Worker-1-c42d33c3ee09.out
 ```
+
+## TODO
+- Run master/slave without having to be in container
+- Docker Compose cluster example
