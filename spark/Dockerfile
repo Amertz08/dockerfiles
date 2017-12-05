@@ -21,8 +21,6 @@ ENV HADOOP_VERSION=${HADOOP_VERSION}
 ENV SPARK_HOME=${SPARK_HOME}
 ENV PATH=$SPARK_HOME/bin:$PATH
 
-RUN printenv
-
 # Install spark
 RUN wget http://apache.claz.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 RUN tar -xzf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
@@ -30,4 +28,4 @@ RUN mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /opt/spark-${SPARK_VER
 RUN ln -s /opt/spark-${SPARK_VERSION} /opt/spark
 RUN rm spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 
-CMD pyspark
+CMD ["pyspark"]
