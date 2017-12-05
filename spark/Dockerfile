@@ -26,7 +26,6 @@ ENV SPARK_MASTER_WEBUI_PORT=8080
 ENV SPARK_WORKER_PORT=5000
 ENV SPARK_WORKER_WEBUI_PORT=8081
 
-
 # Install spark
 RUN wget http://apache.claz.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 RUN tar -xzf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
