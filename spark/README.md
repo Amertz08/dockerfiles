@@ -13,7 +13,7 @@ Apache Spark image. Comes with python3 and Pyspark
 | ENV | DEFAULT |
 |-|-|
 | SPARK_MASTER_PORT | 7077 |
-| SPARK_MASTER_WEBUI_PORT | 8080|
+| SPARK_MASTER_WEBUI_PORT | 8080 |
 | SPARK_WORKER_PORT | 5000 |
 | SPARK_WORKER_WEBUI_PORT | 8081 |
 
@@ -30,15 +30,31 @@ RUN pip install \
 ## Running
 
 ```
-$ docker run -p 8080:8080 -p 6000:8081 -P -it spark bash
+$ docker network create spark-cluster
 
-root@c42d33c3ee09:/# runner master
-starting org.apache.spark.deploy.master.Master, logging to /opt/spark/logs/spark--org.apache.spark.deploy.master.Master-1-c42d33c3ee09.out
+$ docker run -d \
+    -e LOG_FILE=spark-master-log.out
+    -p 8080:8080 \ # Web UI
+    -p 7077:7077 \ # Master Port
+    -p 6066:6066 \ # Rest API
+    --name spark-master \
+    --network spark-cluster \
+    spark runner master
 
-root@c42d33c3ee09:/# runner slave $(hostname):$SPARK_MASTER_PORT
-starting org.apache.spark.deploy.worker.Worker, logging to /opt/spark/logs/spark--org.apache.spark.deploy.worker.Worker-1-c42d33c3ee09.out
+// This can be ran multiple times to create multiple nodes
+$ docker run -d \
+    -e LOG_FILE=spark-worker-log.out
+    -p 8081 \ # Map 8081 to random
+    -p 5000 \ # Map 5000 to random
+    --network spark-cluster \
+    spark runner worker spark-master
+
+// Run PySpark
+$ docker run -it \
+    -p 4040:4040 \ # Web UI
+    --network spark-cluster \
+    spark runner py spark-master
 ```
 
 ## TODO
-- Run master/slave without having to be in container
-- Docker Compose cluster example
+- Docker Compose example
