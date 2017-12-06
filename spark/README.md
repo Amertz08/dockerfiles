@@ -29,7 +29,7 @@ RUN pip install \
 
 ## Running
 
-```
+```bash
 $ docker network create spark-cluster
 
 $ docker run -d \
