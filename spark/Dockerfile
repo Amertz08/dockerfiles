@@ -20,6 +20,8 @@ ENV SPARK_VERSION=${SPARK_VERSION}
 ENV HADOOP_VERSION=${HADOOP_VERSION}
 ENV SPARK_HOME=${SPARK_HOME}
 ENV PATH=$SPARK_HOME/bin:$PATH
+ENV LOG_DIR=/var/log/spark
+ENV LOG_FILE=spark-log.out
 
 ENV SPARK_MASTER_PORT=7077
 ENV SPARK_MASTER_WEBUI_PORT=8080
@@ -33,10 +35,7 @@ RUN mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /opt/spark-${SPARK_VER
 RUN ln -s /opt/spark-${SPARK_VERSION} $SPARK_HOME
 RUN rm spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 
-# Spark Links
-RUN ln -s $SPARK_HOME/sbin/start-master.sh /usr/bin/master
-RUN ln -s $SPARK_HOME/sbin/start-slave.sh /usr/bin/slave
-
+RUN mkdir $LOG_DIR
 COPY runner.sh /usr/local/bin/runner
 
 CMD ["runner", "py"]
