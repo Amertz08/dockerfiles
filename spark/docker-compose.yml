@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  master:
+    build: .
+    environment:
+      - LOG_FILE=spark-master-log.out
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "6066:6066"
+    command: runner master
+
+  worker:
+    build: .
+    environment:
+      - LOG_FILE=spark-worker-log.out
+    ports:
+      - "8081"
+      - "5000"
+    command: runner worker master
+    
