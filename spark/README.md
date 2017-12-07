@@ -57,6 +57,5 @@ $ docker run -it \
 ```
 
 ## TODO
-- Docker Compose example
 - Security
 
