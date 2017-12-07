@@ -29,6 +29,8 @@ RUN pip install \
 
 ## Running
 
+Standard Docker CLI
+
 ```bash
 $ docker network create spark-cluster
 
@@ -54,6 +56,12 @@ $ docker run -it \
     -p 4040:4040 \ # Web UI
     --network spark-cluster \
     spark runner py spark-master
+```
+
+Docker Compose
+
+```bash
+$ docker-compose up --build -d --scale worker=2  # Any amount of desired workers
 ```
 
 ## TODO
