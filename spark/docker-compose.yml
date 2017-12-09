@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   master:
-    build: .
+    image: amertz08/spark
     environment:
       - LOG_FILE=spark-master-log.out
     ports:
@@ -11,11 +11,17 @@ services:
     command: runner master
 
   worker:
-    build: .
+    image: amertz08/spark
     environment:
       - LOG_FILE=spark-worker-log.out
     ports:
       - "8081"
       - "5000"
     command: runner worker master
-    
+
+  notebook:
+    build: amertz08/spark-jupyter
+    ports:
+      - "8888:8888"
+
+    command: runner py master
