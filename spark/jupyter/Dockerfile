@@ -1,6 +1,12 @@
 FROM amertz08/spark
 
-RUN pip install jupyter
+# TODO: actual version numbers
+RUN pip install \
+    jupyter \
+    scipy \
+    scikit-learn \
+    pandas \
+    matplotlib
 
 ENV PYSPARK_DRIVER_PYTHON=jupyter
 ENV PYSPARK_DRIVER_PYTHON_OPTS='notebook'
@@ -8,5 +14,6 @@ ENV PYSPARK_DRIVER_PYTHON_OPTS='notebook'
 RUN useradd -ms /bin/bash notebook
 USER notebook
 WORKDIR /home/notebook
-RUN mkdir .jupyter
+RUN mkdir .jupyter code
 COPY jupyter_notebook_config.py /home/notebook/.jupyter
+WORKDIR /home/notebook/code
