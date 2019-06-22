@@ -35,7 +35,7 @@ services:
     volumes:
       - type: bind
         source: ./dags
-        target: /root/airflow/dags
+        target: /code
 
   db:
     image: postgres:10.9

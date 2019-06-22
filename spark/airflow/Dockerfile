@@ -1,5 +1,12 @@
 FROM amertz08/pyspark
 
+ENV AIRFLOW__CORE__LOAD_EXAMPLES=False
+ENV AIRFLOW__CORE__DAGS_FOLDER=/code
+ENV AIRFLOW__CORE__LOGGING_LEVEL=DEBUG
+ENV AIRFLOW__CORE__EXECUTOR=LocalExecutor
+ENV AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:pass@db:5432/airflow
+ENV AIRFLOW__CORE__DEFAULT_TIMEZONE=America/Central
+
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
     libpq-dev \
@@ -10,11 +17,9 @@ RUN python3.6 -m pip install --no-cache-dir \
     apache-airflow[postgres] \
     psycopg2
 
-RUN airflow -h
-
-COPY home/airflow.cfg /root/airflow
-COPY home/unittests.cfg /root/airflow
-COPY dags/ /root/airflow/dags
+RUN mkdir /code
+WORKDIR /code
+COPY dags/ .
 
 
 EXPOSE 5000
