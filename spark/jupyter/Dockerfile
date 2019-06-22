@@ -1,12 +1,11 @@
-FROM amertz08/spark
+FROM amertz08/pyspark
 
-RUN pip install --upgrade \
-    pip \
+RUN python3.6 -m pip install \
     jupyter \
     scipy \
     scikit-learn \
     pandas \
-    matplotlib==2.*
+    matplotlib
 
 ENV PYSPARK_DRIVER_PYTHON=jupyter
 ENV PYSPARK_DRIVER_PYTHON_OPTS='notebook'
@@ -17,3 +16,7 @@ WORKDIR /home/notebook
 RUN mkdir .jupyter code
 COPY jupyter_notebook_config.py /home/notebook/.jupyter
 WORKDIR /home/notebook/code
+
+EXPOSE 8888
+
+CMD ["pyspark"]
