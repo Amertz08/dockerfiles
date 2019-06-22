@@ -4,21 +4,11 @@ FROM ubuntu:16.04
 RUN apt-get update && \
     apt-get install -y \
     wget \
-    default-jdk scala \
-    python3 python3-pip
+    default-jdk scala
 
-RUN ln -s /usr/bin/pip3 /usr/bin/pip
-RUN ln -s /usr/bin/python3 /usr/bin/python
-
-RUN pip install pyspark
-
-ARG SPARK_VERSION=2.3.3
-ARG HADOOP_VERSION=2.7
-ARG SPARK_HOME=/opt/spark
-
-ENV SPARK_VERSION=${SPARK_VERSION}
-ENV HADOOP_VERSION=${HADOOP_VERSION}
-ENV SPARK_HOME=${SPARK_HOME}
+ENV SPARK_VERSION=2.3.3
+ENV HADOOP_VERSION=2.7
+ENV SPARK_HOME=/opt/spark
 ENV PATH=$SPARK_HOME/bin:$PATH
 
 ENV SPARK_MASTER_PORT=7077
@@ -35,4 +25,4 @@ RUN ln -s /opt/spark-${SPARK_VERSION} $SPARK_HOME
 
 COPY runner.sh /usr/local/bin/runner
 
-CMD ["runner", "py"]
+CMD ["runner", "shell"]

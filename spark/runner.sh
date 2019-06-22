@@ -4,6 +4,7 @@ CLASS=org.apache.spark.deploy
 
 usage () {
   echo "USAGE"
+  echo "shell <MASTER_HOST> : run Spark shell"
   echo "py <MASTER_HOST> : run pyspark"
   echo "master : run master node"
   echo "slave <MASTER_HOST>  : run slave node"
@@ -12,6 +13,10 @@ usage () {
 load_config () {
     . $SPARK_HOME/sbin/spark-config.sh
     . $SPARK_HOME/bin/load-spark-env.sh
+}
+
+run_shell () {
+    spark-shell --master spark://$1:$SPARK_MASTER_PORT
 }
 
 run_py () {
@@ -32,6 +37,9 @@ run_worker () {
 }
 
 case $1 in
+  (shell)
+    run_shell $2
+    ;;
   (py)
     run_py $2
     ;;
