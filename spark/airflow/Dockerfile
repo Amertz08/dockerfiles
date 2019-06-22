@@ -1,6 +1,12 @@
-FROM python:3.6
+FROM amertz08/pyspark
 
-RUN pip install --no-cache \
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    libpq-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python3.6 -m pip install --no-cache-dir \
     apache-airflow[postgres] \
     psycopg2
 
