@@ -1,6 +1,6 @@
 FROM amertz08/pyspark
 
-RUN python3.6 -m pip install \
+RUN python3.6 -m pip install --no-cache-dir \
     jupyter \
     scipy \
     scikit-learn \
