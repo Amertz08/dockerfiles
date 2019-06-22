@@ -1,11 +1,7 @@
 FROM amertz08/pyspark
 
 RUN python3.6 -m pip install --no-cache-dir \
-    jupyter \
-    scipy \
-    scikit-learn \
-    pandas \
-    matplotlib
+    jupyter
 
 ENV PYSPARK_DRIVER_PYTHON=jupyter
 ENV PYSPARK_DRIVER_PYTHON_OPTS='notebook'
