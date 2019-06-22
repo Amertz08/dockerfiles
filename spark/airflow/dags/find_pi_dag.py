@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 
 from airflow import DAG
@@ -7,12 +8,13 @@ from airflow.operators.bash_operator import BashOperator
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2015, 6, 1),
+    'start_date': datetime(2019, 6, 22),
+    'schedule_interval': None,
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
+    'retries': 0,
+    'retry_delay': timedelta(seconds=30),
     # 'queue': 'bash_queue',
     # 'pool': 'backfill',
     # 'priority_weight': 10,
@@ -27,15 +29,11 @@ t1 = BashOperator(
     dag=dag
 )
 
-spark_conf = {
-
-}
-
 t2 = SparkSubmitOperator(
     task_id="run_spark_job",
     dag=dag,
-    application="TEST",
-    py_files="find_pi.py"
+    application=f"{os.environ['AIRFLOW__CORE__DAGS_FOLDER']}/find_pi.py",
 )
 
-t1 << t2
+t2 >> t1
+
