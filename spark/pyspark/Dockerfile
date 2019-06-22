@@ -18,4 +18,4 @@ RUN python3.6 get-pip.py
 RUN python3.6 -m pip install \
     pyspark
 
-CMD ["runner", "py", "master"]
+CMD ["pyspark"]
