@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from airflow import DAG
+from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
 from airflow.operators.bash_operator import BashOperator
 
 default_args = {
@@ -25,3 +26,16 @@ t1 = BashOperator(
     bash_command='date',
     dag=dag
 )
+
+spark_conf = {
+
+}
+
+t2 = SparkSubmitOperator(
+    task_id="run_spark_job",
+    dag=dag,
+    application="TEST",
+    py_files="find_pi.py"
+)
+
+t1 << t2
