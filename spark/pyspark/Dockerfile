@@ -3,15 +3,14 @@ FROM amertz08/spark
 ENV PYSPARK_DRIVER_PYTHON=/usr/bin/python3.6
 
 RUN apt-get install -y \
-    software-properties-common \
-    python-software-properties
+    software-properties-common
 
 RUN add-apt-repository \
-    ppa:jonathonf/python-3.6 -y && \
+    ppa:deadsnakes/ppa -y && \
     apt-get update
 
 RUN apt-get install -y \
-    python3.6
+    python3.6-dev
 
 RUN wget -q https://bootstrap.pypa.io/get-pip.py
 RUN python3.6 get-pip.py
