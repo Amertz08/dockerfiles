@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   master:
-    image: amertz08/spark
+    image: amertz08/pyspark
     ports:
       - "8080:8080"
       - "7077:7077"
@@ -9,24 +9,29 @@ services:
     command: runner master
 
   worker:
-    image: amertz08/spark
+    image: amertz08/pyspark
     ports:
       - "8081"
       - "5000"
+    depends_on:
+      - master
     command: runner worker master
 
   notebook:
     image: amertz08/spark-jupyter
     ports:
       - "8888:8888"
+    depends_on:
+      - master
     command: runner py master
 
   airflow:
-    image: amertz08/airflow
+    image: amertz08/spark-airflow
     ports:
       - "5000:5000"
     depends_on:
       - db
+      - master
     volumes:
       - type: bind
         source: ./dags
