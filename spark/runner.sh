@@ -27,13 +27,13 @@ run_master () {
     load_config
     $SPARK_HOME/bin/spark-class $CLASS.master.Master \
     -h $(hostname) --port $SPARK_MASTER_PORT \
-    --webui-port $SPARK_MASTER_WEBUI_PORT >> $LOG_DIR/$LOG_FILE
+    --webui-port $SPARK_MASTER_WEBUI_PORT
 }
 
 run_worker () {
     load_config
     $SPARK_HOME/bin/spark-class $CLASS.worker.Worker \
-    --webui-port $SPARK_WORKER_WEBUI_PORT $1:$SPARK_MASTER_PORT >> $LOG_DIR/$LOG_FILE
+    --webui-port $SPARK_WORKER_WEBUI_PORT $1:$SPARK_MASTER_PORT
 }
 
 case $1 in
