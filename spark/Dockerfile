@@ -25,4 +25,4 @@ RUN ln -s /opt/spark-${SPARK_VERSION} $SPARK_HOME
 
 COPY runner.sh /usr/local/bin/runner
 
-CMD ["runner", "shell"]
+CMD ["spark-shell"]
