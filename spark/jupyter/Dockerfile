@@ -1,12 +1,12 @@
 FROM amertz08/spark
 
-# TODO: actual version numbers
-RUN pip install \
+RUN pip install --upgrade \
+    pip \
     jupyter \
     scipy \
     scikit-learn \
     pandas \
-    matplotlib
+    matplotlib==2.*
 
 ENV PYSPARK_DRIVER_PYTHON=jupyter
 ENV PYSPARK_DRIVER_PYTHON_OPTS='notebook'
