@@ -6,7 +6,7 @@ Apache Spark image. Comes with python3 and Pyspark
 
 | ARG | DEFAULT |
 |-|-|
-| SPARK_VERSION | 2.2.0 |
+| SPARK_VERSION | 2.3.3 |
 | HADOOP_VERSION | 2.7 |
 | SPARK_HOME | /opt/spark |
 
