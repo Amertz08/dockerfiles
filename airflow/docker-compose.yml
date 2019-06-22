@@ -1,0 +1,45 @@
+version: '3.4'
+services:
+  master:
+    image: amertz08/spark
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "6066:6066"
+    command: runner master
+
+  worker:
+    image: amertz08/spark
+    ports:
+      - "8081"
+      - "5000"
+    command: runner worker master
+
+  notebook:
+    image: amertz08/spark-jupyter
+    ports:
+      - "8888:8888"
+    command: runner py master
+
+  airflow:
+    image: amertz08/airflow
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    volumes:
+      - type: bind
+        source: ./dags
+        target: /root/airflow/dags
+
+  db:
+    image: postgres:10.9
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: airflow
+    volumes:
+      - "airflow-db:/var/lib/postgresql/data"
+
+volumes:
+  airflow-db:
