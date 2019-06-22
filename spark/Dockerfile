@@ -2,9 +2,11 @@ FROM ubuntu:16.04
 
 # Install prereqs
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install --no-install-recommends -y \
     wget \
-    default-jdk scala
+    default-jdk \
+    scala \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV SPARK_VERSION=2.3.3
 ENV HADOOP_VERSION=2.7
