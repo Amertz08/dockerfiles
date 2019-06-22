@@ -6,8 +6,6 @@ services:
       - "8080:8080"
       - "7077:7077"
       - "6066:6066"
-    volumes:
-      - logs:/var/log/spark
     command: runner master
 
   worker:
@@ -22,9 +20,3 @@ services:
     ports:
       - "8888:8888"
     command: runner py master
-    volumes:
-        - notebooks:/home/notebook/code
-
-volumes:
-  notebooks:
-  logs:
