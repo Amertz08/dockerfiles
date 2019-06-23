@@ -2,6 +2,7 @@ version: '3.4'
 services:
   master:
     image: amertz08/pyspark
+    restart: always
     ports:
       - "8080:8080"
       - "7077:7077"
@@ -10,6 +11,7 @@ services:
 
   worker:
     image: amertz08/pyspark
+    restart: always
     ports:
       - "8081"
       - "5000"
@@ -27,15 +29,57 @@ services:
 
   airflow:
     image: amertz08/spark-airflow
+    restart: always
     ports:
       - "5000:5000"
     depends_on:
       - db
       - master
+      - broker
     volumes:
       - type: bind
         source: ./dags
         target: /code
+
+  airflow-scheduler:
+    image: amertz08/spark-airflow
+    restart: always
+    depends_on:
+      - airflow
+    volumes:
+      - type: bind
+        source: ./dags
+        target: /code
+    command: scheduler
+
+  airflow-worker:
+    image: amertz08/spark-airflow
+    restart: always
+    environment:
+      C_FORCE_ROOT: 1  # TODO: create non root user
+    depends_on:
+      - airflow-scheduler
+    volumes:
+      - type: bind
+        source: ./dags
+        target: /code
+    command: worker
+
+  flower:
+    image: amertz08/spark-airflow
+    restart: always
+    depends_on:
+      - broker
+    ports:
+      - "5555:5555"
+    command: flower
+
+
+  broker:
+    image: rabbitmq:3.7-management-alpine
+    ports:
+      - "15672:15672"
+      - "5672:5672"
 
   db:
     image: postgres:10.9
