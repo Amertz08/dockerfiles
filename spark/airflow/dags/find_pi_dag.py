@@ -21,7 +21,7 @@ default_args = {
     # 'end_date': datetime(2016, 1, 1),
 }
 
-dag = DAG("HELLO", default_args=default_args)
+dag = DAG("HELLO", catchup=False, default_args=default_args)
 
 t1 = BashOperator(
     task_id='print_date',
