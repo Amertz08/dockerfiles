@@ -2,7 +2,7 @@
 
 case $1 in
     webserver)
-        airflow initdb
+        airflow upgradedb
         exec airflow webserver --port 5000
         ;;
     worker|scheduler|flower)
