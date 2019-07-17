@@ -7,8 +7,7 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python3.6 -m pip install --no-cache-dir \
-    apache-airflow[postgres,celery] \
-    psycopg2
+    apache-airflow[postgres,celery]
 
 COPY entrypoint.sh .
 RUN mkdir /code
