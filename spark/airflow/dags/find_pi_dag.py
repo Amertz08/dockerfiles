@@ -21,19 +21,17 @@ default_args = {
     # 'end_date': datetime(2016, 1, 1),
 }
 
-dag = DAG("HELLO", catchup=False, default_args=default_args)
+with DAG("HELLO", catchup=False, default_args=default_args) as dag:
 
-t1 = BashOperator(
-    task_id='print_date',
-    bash_command='date',
-    dag=dag
-)
+    t1 = BashOperator(
+        task_id='print_date',
+        bash_command='date',
+    )
 
-t2 = SparkSubmitOperator(
-    task_id="run_spark_job",
-    dag=dag,
-    application=f"{os.environ['AIRFLOW__CORE__DAGS_FOLDER']}/find_pi.py",
-)
+    t2 = SparkSubmitOperator(
+        task_id="run_spark_job",
+        application=f"{os.environ['AIRFLOW__CORE__DAGS_FOLDER']}/find_pi.py",
+    )
 
 t2 >> t1
 
